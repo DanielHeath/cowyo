@@ -27,6 +27,14 @@ linux32:
 .PHONY: linux64
 linux64:
 	env GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -o dist/cowyo_linux_amd64
+	#cd dist && upx --brute cowyo_linux_amd64
+
+.PHONY: deploy
+deploy: linux64
+	ssh camlistore "sudo initctl stop cowyo"
+	scp dist/cowyo_linux_amd64 camlistore:cowyo/cowyo
+	ssh camlistore "chmod +x cowyo/cowyo"
+	ssh camlistore "sudo initctl start cowyo"
 
 .PHONY: windows
 windows:
