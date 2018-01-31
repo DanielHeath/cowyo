@@ -178,6 +178,12 @@
                           {{ end }}
                     {{ end }}
 
+                    {{ if .NestablePage }}
+                          {{ range .NestableItems }}
+                            {{ template "nestable.tmpl" . }}
+                          {{ end }}
+                    {{ end }}
+
                     {{ if .DirectoryPage }}
                         <table style="width:100%">
                           <tr>
